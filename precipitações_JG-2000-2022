@@ -23,15 +23,73 @@ prec = c(263.4, 27, 164, 266.3, 217.3, 197.1, 248.2, 186, 288.1, 16.6, 15.6, 121
 64.9, 112, 174.2, 427.1, 476, 138.3, 198.6, 328.8, 70.8, 46.9, 30.5, 158.7,
 117.5, 170.7, 466.7, 197.5, 675, 436, 333.5, 200.6, 51.3, 44.9, 119.1)
 
-prec_agrupada_3 = matrix(prec, ncol = 3, byrow = TRUE)
-soma_p_a_3 = rowSums(prec_agrupada_3)
+for( i in 1:length(prec)){
+   if (prec[[i]] == 0){
+       prec[[i]] = NA
+   }
+}
 
-plot(soma_p_a_3, pch = 16,
-xlab = "trimestres", ylab = "qt. acumulado de precipitações",
-main = "Número acumulado de precipitações na barragem de Duas Unas, no período de 2000 à 2022")
+#Por mês
+
+plot(prec, pch = 16,
+xlab = "Meses", ylab = "qt. acumulada de precipitações",
+main = "Quantidade acumulada de precipitações, por mês, na barragem de Duas Unas, no período de 2000 à 2022")
 
 par(new = T)
 
-plot(soma_p_a_3, type = "l", pch = 16,
-xlab = "trimestres", ylab = "qt. acumulado de precipitações",
-main = "Número acumulado de precipitações na barragem de Duas Unas, no período de 2000 à 2022")
+plot(prec, type = "l", pch = 16,
+xlab = "Meses", ylab = "qt. acumulada de precipitações",
+main = "Quantidade acumulada de precipitações, por mês, na barragem de Duas Unas, no período de 2000 à 2022")
+
+#Regressão Linear
+meses = seq(1, length(prec))
+fit = lm(prec ~ meses)
+abline(fit, lty = 2)
+legend( x = "topleft", legend = "Regressão Linear", lty = 2, lwd = 1, bty = "n")
+
+#Por bimestre
+prec_agrupada_2 = matrix(prec, ncol = 2, byrow = TRUE)
+soma2 = rowSums(prec_agrupada_2)
+
+plot(soma2, pch = 16,
+xlab = "Bimestres", ylab = "qt. acumulada de precipitações",
+main = "Quantidade acumulada de precipitações, por bimestre, na barragem de Duas Unas, no período de 2000 à 2022")
+
+par(new = T)
+
+plot(soma2, type = "l", pch = 16,
+xlab = "Bimestres", ylab = "qt. acumulada de precipitações",
+main = "Quantidade acumulada de precipitações, por bimestre, na barragem de Duas Unas, no período de 2000 à 2022")
+
+#Regressão Linear(Bimestre)
+bimestres = seq(1, length(soma2))
+fit = lm(soma2 ~ bimestres)
+abline(fit, lty = 2)
+legend( x = "topleft", legend = "Regressão Linear", lty = 2, lwd = 1, bty = "n")
+
+
+#Por trimestre
+
+prec_agrupada_3 = matrix(prec, ncol = 3, byrow = TRUE)
+soma3 = rowSums(prec_agrupada_3)
+#soma3[[14]] = NA
+
+plot(soma3, pch = 16,
+xlab = "trimestres", ylab = "qt. acumulada de precipitações",
+main = "Quantidade acumulada de precipitações, por trimestre, na barragem de Duas Unas, no período de 2000 à 2022")
+
+par(new = T)
+
+plot(soma3, type = "l", pch = 16,
+xlab = "trimestres", ylab = "qt. acumulada de precipitações",
+main = "Quantidade acumulada de precipitações, por trimestre, na barragem de Duas Unas, no período de 2000 à 2022")
+
+
+#Regressão Linear(Trimestre)
+trimestres = seq(1, length(soma3))
+fit = lm(soma3 ~ trimestres)
+abline(fit, lty = 2)
+legend( x = "topleft", legend = "Regressão Linear", lty = 2, lwd = 1, bty = "n")
+
+
+
