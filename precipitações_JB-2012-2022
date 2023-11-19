@@ -16,11 +16,17 @@ soma_p_a_3 = rowSums(prec_agrupada_3)
 
 
 plot(soma_p_a_3, pch = 16,
-xlab = "trimestres", ylab = "qt. acumulado de precipitações",
-main = "Número acumulado de precipitações na barragem de Duas Unas, no período de 2012 à 2022")
+xlab = "trimestres", ylab = "qt. acumulada de precipitações",
+main = "Quantidade acumulada de precipitações, por trimestre, na barragem de Duas Unas, no período de 2012 à 2022")
 
 par(new = T)
 
 plot(soma_p_a_3, type = "l", pch = 16,
-xlab = "trimestres", ylab = "qt. acumulado de precipitações",
-main = "Número acumulado de precipitações na barragem de Duas Unas, no período de 2012 à 2022")
+xlab = "trimestres", ylab = "qt. acumulada de precipitações",
+main = "Quantidade acumulada de precipitações, por trimestre, na barragem de Duas Unas, no período de 2012 à 2022")
+
+#Regressão Linear
+trimestres = seq(1, length(soma_p_a_3))
+fit = lm(soma_p_a_3 ~ trimestres)
+abline(fit, lty = 2)
+legend( x = "topleft", legend = "Regressão Linear", lty = 2, lwd = 1, bty = "n")
