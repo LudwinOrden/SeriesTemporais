@@ -70,19 +70,23 @@ legend( x = "topleft", legend = "Regressão Linear", lty = 2, lwd = 1, bty = "n"
 
 #Por trimestre
 
-prec_agrupada_3 = matrix(prec, ncol = 3, byrow = TRUE)
-soma3 = rowSums(prec_agrupada_3)
-#soma3[[14]] = NA
-
 plot(soma3, pch = 16,
 xlab = "trimestres", ylab = "qt. acumulada de precipitações",
-main = "Quantidade acumulada de precipitações, por trimestre, na barragem de Duas Unas, no período de 2000 à 2022")
+main = "Quantidade acumulada de precipitações trimestral, em ml, na barragem de Duas Unas no período de 2000 à 2022")
 
 par(new = T)
 
 plot(soma3, type = "l", pch = 16,
 xlab = "trimestres", ylab = "qt. acumulada de precipitações",
-main = "Quantidade acumulada de precipitações, por trimestre, na barragem de Duas Unas, no período de 2000 à 2022")
+main = "Quantidade acumulada de precipitações trimestral, em ml, na barragem de Duas Unas no período de 2000 à 2022")
+
+abline( v = c(4,8,12,16,20,24,28,32,36,40,44,48,52,56,60,64,68,72,76,80,84,88,92),
+lty = 3,
+lwd = 1)
+
+datas = seq.Date(from = as.Date("2000/01/01"),
+to = as.Date("2022/12/01"),
+by = "1 month")
 
 
 #Regressão Linear(Trimestre)
