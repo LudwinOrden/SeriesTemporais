@@ -29,7 +29,7 @@ for( i in 1:length(prec)){
    }
 }
 
-#Por mês
+#Por mês-----------------------------------------------------------------------------------------------------------------
 
 plot(prec, pch = 16,
 xlab = "Meses", ylab = "qt. acumulada de precipitações",
@@ -47,7 +47,7 @@ fit = lm(prec ~ meses)
 abline(fit, lty = 2)
 legend( x = "topleft", legend = "Regressão Linear", lty = 2, lwd = 1, bty = "n")
 
-#Por bimestre
+#Por bimestre-------------------------------------------------------------------------------------------------------------
 prec_agrupada_2 = matrix(prec, ncol = 2, byrow = TRUE)
 soma2 = rowSums(prec_agrupada_2)
 
@@ -68,25 +68,43 @@ abline(fit, lty = 2)
 legend( x = "topleft", legend = "Regressão Linear", lty = 2, lwd = 1, bty = "n")
 
 
-#Por trimestre
+#Por trimestre-------------------------------------------------------------------------------------------------------
+
+prec_agrupada_3 = matrix(prec, ncol = 3, byrow = TRUE)
+soma3 = rowSums(prec_agrupada_3)
 
 plot(soma3, pch = 16,
-xlab = "trimestres", ylab = "qt. acumulada de precipitações",
+xlab = "trimestres", ylab = "qt. acumulada de precipitações", axes = F,
 main = "Quantidade acumulada de precipitações trimestral, em ml, na barragem de Duas Unas no período de 2000 à 2022")
+
+axis(1, at = c(0,4,8,12,16,20,24,28,32,36,40,44,48,52,56,60,64,68,72,76,80,84,88,92))
+
+axis(2, at = c(0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500))
 
 par(new = T)
 
 plot(soma3, type = "l", pch = 16,
-xlab = "trimestres", ylab = "qt. acumulada de precipitações",
+xlab = "trimestres", ylab = "qt. acumulada de precipitações", axes = F,
 main = "Quantidade acumulada de precipitações trimestral, em ml, na barragem de Duas Unas no período de 2000 à 2022")
+
+axis(1, at = c(0,4,8,12,16,20,24,28,32,36,40,44,48,52,56,60,64,68,72,76,80,84,88,92))
+
+axis(2, at = c(0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500))
 
 abline( v = c(4,8,12,16,20,24,28,32,36,40,44,48,52,56,60,64,68,72,76,80,84,88,92),
 lty = 3,
 lwd = 1)
 
-datas = seq.Date(from = as.Date("2000/01/01"),
-to = as.Date("2022/12/01"),
-by = "1 month")
+#Trimestre(Versão Pacotes)
+
+#Transformando o eixo X em trimestres
+DT = data.frame(date = seq(as.Date("2000-01-01"), length = length(soma3), by = "3 months"), soma3)
+DT2 = transform(DT, date = as.yearqtr(date))
+ggplot(DT2, aes(date,soma3)) + scale_x_yearqtr(format = "%q°T/%Y")
+#Pelo zoo
+
+z = zoo(DT$soma3, as.yearqtr(DT$date))
+autoplot(z) + scale_x_yearqtr(format = "%q°T/%Y")
 
 
 #Regressão Linear(Trimestre)
@@ -94,6 +112,5 @@ trimestres = seq(1, length(soma3))
 fit = lm(soma3 ~ trimestres)
 abline(fit, lty = 2)
 legend( x = "topleft", legend = "Regressão Linear", lty = 2, lwd = 1, bty = "n")
-
 
 
